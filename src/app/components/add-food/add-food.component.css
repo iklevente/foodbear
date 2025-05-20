@@ -1,0 +1,6 @@
+.content_td p {
+  max-height: 100px;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  white-space: pre-line;
+}

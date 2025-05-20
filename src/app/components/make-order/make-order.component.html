@@ -1,0 +1,133 @@
+<div class="container my-4">
+  <h1 class="mb-4 text-center">Új rendelés létrehozása</h1>
+
+  <!-- Partner kiválasztó űrlap -->
+  <form
+    *ngIf="!partnerSelected"
+    [formGroup]="partnerForm"
+    (ngSubmit)="selectPartner()"
+    class="mx-auto"
+    style="max-width: 400px"
+  >
+    <div class="mb-3">
+      <label for="partner" class="form-label">Partner kiválasztása</label>
+      <select
+        id="partner"
+        class="form-select"
+        formControlName="partner"
+        aria-label="Partner kiválasztása"
+      >
+        <option value="" disabled selected>Válassz partnert</option>
+        <option *ngFor="let partner of partners" [value]="partner.id">
+          {{ partner.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          partnerForm.controls['partner'].invalid &&
+          (partnerForm.dirty || partnerForm.touched)
+        "
+        class="invalid-feedback d-block"
+      >
+        Kérjük, válassz partnert.
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary w-100"
+      [disabled]="partnerForm.invalid"
+    >
+      Partner kiválasztása
+    </button>
+  </form>
+
+  <!-- Rendelés űrlap -->
+  <form
+    *ngIf="partnerSelected && foods"
+    [formGroup]="orderForm"
+    (ngSubmit)="makeOrder()"
+    class="mx-auto"
+    style="max-width: 700px"
+  >
+    <div class="mb-3">
+      <label for="name" class="form-label">Név</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        formControlName="name"
+        placeholder="Add meg a neved"
+        [ngClass]="{
+          'is-invalid':
+            orderForm.controls['name'].invalid &&
+            (orderForm.dirty || orderForm.touched)
+        }"
+      />
+      <div class="invalid-feedback">Érvénytelen név.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Cím</label>
+      <input
+        id="address"
+        type="text"
+        class="form-control"
+        formControlName="address"
+        placeholder="Add meg a címed"
+        [ngClass]="{
+          'is-invalid':
+            orderForm.controls['address'].invalid &&
+            (orderForm.dirty || orderForm.touched)
+        }"
+      />
+      <div class="invalid-feedback">Érvénytelen cím.</div>
+    </div>
+
+    <div class="mb-4">
+      <label for="note" class="form-label">Megjegyzés (opcionális)</label>
+      <input
+        id="note"
+        type="text"
+        class="form-control"
+        formControlName="note"
+        placeholder="Egyéb megjegyzések"
+      />
+    </div>
+
+    <h4 class="mb-3">Ételek kiválasztása</h4>
+    <div
+      *ngFor="let food of foods"
+      class="row align-items-center mb-3 border rounded p-2 shadow-sm"
+    >
+      <div class="col-auto">
+        <img
+          [src]="food.imageUrl"
+          alt="{{ food.name }}"
+          class="img-thumbnail"
+          style="max-width: 100px"
+        />
+      </div>
+      <div class="col">
+        <label class="form-label mb-1">{{ food.name }}</label>
+        <div class="text-muted">Ár: {{ food.price | currency }}</div>
+      </div>
+      <div class="col-auto" style="max-width: 120px">
+        <input
+          type="number"
+          min="0"
+          class="form-control"
+          [formControlName]="food.id.toString()"
+          placeholder="Mennyiség"
+        />
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-success w-100"
+      [disabled]="orderForm.invalid"
+    >
+      Megrendelés leadása
+    </button>
+  </form>
+</div>

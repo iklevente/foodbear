@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <h3 class="mb-3 text-light">Futárok listája</h3>
+
+  <div
+    *ngFor="let courier of couriers"
+    class="card shadow-sm mb-3 bg-dark text-light border-secondary"
+  >
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-2">
+          <h5 class="mb-0">#{{ courier.id }}</h5>
+        </div>
+        <div class="col-md-2">
+          <strong>{{ courier.name }}</strong>
+        </div>
+        <div class="col-md-2">Kapacitás: {{ courier.capacity }}</div>
+        <div class="col-md-2">
+          <span
+            class="badge"
+            [ngClass]="courier.isAvailable ? 'bg-success' : 'bg-secondary'"
+          >
+            {{ courier.isAvailable ? "Elérhető" : "Nem elérhető" }}
+          </span>
+        </div>
+        <div class="col-md-2">
+          Rendelések:
+          <span class="badge bg-info text-dark">{{
+            courier.orders.length
+          }}</span>
+        </div>
+        <div class="col-md-2 text-end">
+          <button
+            class="btn btn-outline-primary btn-sm"
+            [routerLink]="'/mainpage/courier/' + courier.id"
+            [state]="{ courier: courier }"
+          >
+            Részletek megtekintése
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

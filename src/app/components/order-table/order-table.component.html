@@ -1,0 +1,97 @@
+<div class="table-responsive">
+  <table class="table align-middle table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Azonosító</th>
+        <th scope="col">Címzett</th>
+        <th scope="col">Név</th>
+        <th scope="col">Megjegyzés</th>
+        <th scope="col">Ételek</th>
+        <th scope="col">Teljes ár</th>
+        <th scope="col">Futár</th>
+        <th scope="col">Étterem</th>
+        <th scope="col">Kiszállítva</th>
+        <th scope="col">Rendelés ideje</th>
+        <th scope="col">Kiszállítás ideje</th>
+        <th scope="col" class="text-center">Műveletek</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.name }}</td>
+        <td>
+          <small class="text-muted" *ngIf="order.note; else noNote">{{
+            order.note
+          }}</small>
+          <ng-template #noNote><em class="text-secondary">—</em></ng-template>
+        </td>
+        <td>
+          <div *ngFor="let food of order.orderToFoods" class="mb-1">
+            <a
+              routerLink="/mainpage/food/{{ food.food.id }}"
+              class="text-decoration-none"
+            >
+              {{ food.food.name }}
+            </a>
+            <span class="badge bg-info text-dark ms-1">x{{ food.amount }}</span>
+          </div>
+        </td>
+        <td>{{ getFullPrice(order) | currency }}</td>
+        <td>
+          <a
+            routerLink="/mainpage/courier/{{ order.courier.id }}"
+            class="link-primary"
+          >
+            {{ order.courier.name }}
+          </a>
+        </td>
+        <td>
+          <a
+            routerLink="/mainpage/partner/{{ getPartner().id }}"
+            class="link-primary"
+          >
+            {{ getPartner().name }}
+          </a>
+        </td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="order.delivered ? 'bg-success' : 'bg-warning text-dark'"
+          >
+            {{ order.delivered ? "Igen" : "Nem" }}
+          </span>
+        </td>
+        <td>{{ order.orderTime | date : "short" }}</td>
+        <td>{{ order.deliveryTime | date : "short" }}</td>
+        <td class="text-center">
+          <div class="btn-group btn-group-sm" role="group">
+            <button
+              class="btn btn-outline-primary"
+              routerLink="/mainpage/order/{{ order.id }}"
+              title="Részletek megtekintése"
+            >
+              Részletek
+            </button>
+            <button
+              class="btn btn-outline-warning"
+              (click)="deliverOrder(order.id)"
+              [disabled]="order.delivered"
+              title="Kiszállítottnak jelölés"
+            >
+              Kiszállítás
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              (click)="deleteOrder(order.id)"
+              title="Rendelés törlése"
+            >
+              Törlés
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

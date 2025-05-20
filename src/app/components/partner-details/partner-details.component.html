@@ -1,0 +1,28 @@
+<div *ngIf="partner" class="container my-4">
+  <div class="row gx-5">
+    <!-- Partner Info -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm p-4 h-100">
+        <h1 class="mb-3">{{ partner.name }}</h1>
+        <ul class="list-unstyled mb-0">
+          <li><strong>Azonosító:</strong> {{ partner.id }}</li>
+          <li><strong>Telefon:</strong> {{ partner.tel }}</li>
+          <li><strong>Adószám:</strong> {{ partner.taxNumber }}</li>
+          <li><strong>Cím:</strong> {{ partner.address }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Foods and Orders -->
+    <div class="col-md-8">
+      <div class="mb-5">
+        <h2 class="mb-3">Ételek elérhetőek itt: {{ partner.name }}</h2>
+        <app-food-table [foods]="getFoods()"></app-food-table>
+      </div>
+      <div>
+        <h2 class="mb-3">Rendelések innen: {{ partner.name }}</h2>
+        <app-order-table [orders]="orders"></app-order-table>
+      </div>
+    </div>
+  </div>
+</div>

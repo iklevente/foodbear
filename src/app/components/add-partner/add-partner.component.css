@@ -1,0 +1,8 @@
+.partner {
+  margin-bottom: 1rem;
+}
+
+.card .card-body app-partner {
+  display: block;
+  width: 100%;
+}

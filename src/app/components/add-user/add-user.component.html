@@ -1,0 +1,99 @@
+<div class="col-md-5 mx-auto mt-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <h4 class="card-title text-center mb-4">Új Felhasználó Regisztrálása</h4>
+
+      <form [formGroup]="registerForm" (ngSubmit)="addUser()">
+        <div class="mb-3">
+          <label class="form-label">Teljes Név</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Írd be a neved"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.invalid &&
+                registerForm.dirty &&
+                registerForm.controls['name'].errors
+            }"
+          />
+          <div class="invalid-feedback">A név nem érvényes</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Írd be az email címed"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.invalid &&
+                registerForm.dirty &&
+                registerForm.controls['email'].errors
+            }"
+          />
+          <div class="invalid-feedback">Az email cím nem érvényes</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Jelszó</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Jelszó"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.invalid &&
+                registerForm.dirty &&
+                registerForm.controls['password'].errors
+            }"
+          />
+          <div class="invalid-feedback">A jelszó túl rövid</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Jelszó megerősítése</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            placeholder="Erősítsd meg a jelszót"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.invalid &&
+                registerForm.dirty &&
+                registerForm.controls['confirmPassword'].errors
+            }"
+          />
+          <div class="invalid-feedback" *ngIf="passwordMismatch()">
+            A jelszavak nem egyeznek
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Szerepkör</label>
+          <select class="form-select" formControlName="isAdmin">
+            <option value="true">Adminisztrátor</option>
+            <option value="false">Felhasználó</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100 mb-2"
+          [disabled]="registerForm.invalid"
+        >
+          Regisztrálás
+        </button>
+      </form>
+
+      <div *ngIf="serversideError" class="alert alert-danger mt-3" role="alert">
+        A felhasználó regisztrációja sikertelen
+      </div>
+    </div>
+  </div>
+</div>

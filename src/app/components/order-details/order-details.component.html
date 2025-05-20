@@ -1,0 +1,103 @@
+<div *ngIf="order" class="container my-4">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Rendelés részletei</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <strong>Azonosító:</strong> {{ order.id }}
+      </li>
+      <li class="list-group-item"><strong>Név:</strong> {{ order.name }}</li>
+      <li class="list-group-item"><strong>Cím:</strong> {{ order.address }}</li>
+      <li class="list-group-item">
+        <strong>Kiszállítva:</strong>
+        <span
+          class="badge"
+          [ngClass]="order.delivered ? 'bg-success' : 'bg-warning'"
+        >
+          {{ order.delivered ? "Igen" : "Nem" }}
+        </span>
+      </li>
+      <li class="list-group-item">
+        <strong>Rendelés ideje:</strong> {{ order.orderTime | date : "short" }}
+      </li>
+      <li class="list-group-item">
+        <strong>Kiszállítás ideje:</strong>
+        {{ order.deliveryTime | date : "short" }}
+      </li>
+      <li class="list-group-item">
+        <strong>Futár:</strong>
+        <a
+          routerLink="/mainpage/courier/{{ order.courier.id }}"
+          class="link-primary"
+        >
+          {{ order.courier.name }}
+        </a>
+      </li>
+      <li class="list-group-item">
+        <strong>Kapcsolódó éttermek:</strong>
+        <span *ngFor="let restaurant of getRestaurants(); let last = last">
+          <a
+            routerLink="/mainpage/partner/{{ restaurant.id }}"
+            class="me-2 link-secondary"
+            >{{ restaurant.name }}</a
+          >{{ !last ? "," : "" }}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Rendelt ételek</h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Név</th>
+            <th>Ár</th>
+            <th>Mennyiség</th>
+            <th>Teljes ár</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let food of order.orderToFoods">
+            <td>
+              <a
+                routerLink="/mainpage/food/{{ food.food.id }}"
+                class="text-decoration-none"
+              >
+                {{ food.food.name }}
+              </a>
+            </td>
+            <td>{{ food.food.price | currency }}</td>
+            <td>{{ food.amount }}</td>
+            <td>{{ food.food.price * food.amount | currency }}</td>
+          </tr>
+          <tr class="fw-bold">
+            <td colspan="3" class="text-end">Teljes ár:</td>
+            <td>{{ getFullPrice() | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer d-flex justify-content-end gap-2">
+      <button
+        class="btn btn-warning btn-sm"
+        (click)="deliverOrder(order.id)"
+        [disabled]="order.delivered"
+        title="Rendelés kiszállítottnak jelölése"
+      >
+        Kiszállítás
+      </button>
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="deleteOrder(order.id)"
+        title="Rendelés törlése"
+      >
+        Törlés
+      </button>
+    </div>
+  </div>
+</div>

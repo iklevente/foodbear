@@ -1,0 +1,42 @@
+<div *ngIf="food" class="container mt-4">
+  <div class="card shadow border-0 p-4">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-3 text-center">
+        <img
+          [src]="food.imageUrl"
+          class="img-fluid rounded"
+          style="max-height: 150px"
+          alt="{{ food.name }}"
+        />
+      </div>
+      <div class="col-md-9">
+        <h2 class="fw-bold mb-1">{{ food.name }}</h2>
+        <p class="text-muted mb-2">
+          Származás:
+          <a
+            [routerLink]="'/mainpage/partner/' + food.partner.id"
+            class="text-decoration-none fw-semibold"
+          >
+            {{ food.partner.name }}
+          </a>
+        </p>
+        <span class="badge bg-primary fs-6 mb-2">
+          Ár: {{ food.price | currency : "HUF" : "symbol" }}
+        </span>
+        <div class="mt-3">
+          <h5>Leírás</h5>
+          <p class="text-body">{{ food.description }}</p>
+        </div>
+        <div>
+          <h5>Megrendelések száma</h5>
+          <p class="text-body">{{ food.orderToFoods.length }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4 class="mb-3">Rendelések</h4>
+    <app-order-table *ngIf="orders" [orders]="orders"></app-order-table>
+  </div>
+</div>

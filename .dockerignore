@@ -1,0 +1,11 @@
+node_modules
+README.md
+backend
+.angular
+.vscode
+Dockerfile
+docker-compose.yml
+.evn
+.git
+.gitignore
+dbdump

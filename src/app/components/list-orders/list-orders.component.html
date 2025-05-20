@@ -1,0 +1,13 @@
+<div class="container my-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-info text-white d-flex align-items-center">
+      <h2 class="mb-0"><i class="bi bi-receipt me-2"></i> Rendelések</h2>
+    </div>
+    <div class="card-body" *ngIf="orders && orders.length > 0; else noOrders">
+      <app-order-table [orders]="orders"></app-order-table>
+    </div>
+    <ng-template #noOrders>
+      <p class="text-muted text-center my-3">Nincsenek elérhető rendelések.</p>
+    </ng-template>
+  </div>
+</div>

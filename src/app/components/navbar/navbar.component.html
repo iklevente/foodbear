@@ -1,0 +1,195 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a
+      class="navbar-brand d-flex align-items-center"
+      routerLink="/mainpage/makeorder"
+    >
+      <img
+        src="../../../assets/paprikaskrumpli.webp"
+        alt="logo"
+        style="height: 28px; margin-right: 8px"
+      />
+      <span class="fw-bold">Foodbear</span>
+    </a>
+
+    <!-- Toggle button for collapse -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Navigáció váltása"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto">
+        <!-- User dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Felhasználó
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="profile"
+                routerLinkActive="active"
+                >Profil</a
+              >
+            </li>
+            <li>
+              <button class="dropdown-item text-danger" (click)="logout()">
+                Kijelentkezés
+              </button>
+            </li>
+            <ng-container *ngIf="currentUser.isAdmin">
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="adduser"
+                  routerLinkActive="active"
+                  >Felhasználó hozzáadása</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="listusers"
+                  routerLinkActive="active"
+                  >Felhasználók listája</a
+                >
+              </li>
+            </ng-container>
+          </ul>
+        </li>
+
+        <!-- Partners dropdown -->
+        <li class="nav-item dropdown" *ngIf="currentUser.isAdmin">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="partnersDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Partnerek
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="partnersDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="addpartner"
+                routerLinkActive="active"
+                >Partnerek kezelése</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="partners"
+                routerLinkActive="active"
+                >Partnerek listája</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <!-- Foods dropdown -->
+        <li class="nav-item dropdown" *ngIf="currentUser.isAdmin">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="foodsDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Ételek
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="foodsDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="addfood"
+                routerLinkActive="active"
+                >Ételek kezelése</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="listfoods"
+                routerLinkActive="active"
+                >Ételek listája</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <!-- Couriers dropdown -->
+        <li class="nav-item dropdown" *ngIf="currentUser.isAdmin">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="couriersDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Futárok
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="couriersDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="addcourier"
+                routerLinkActive="active"
+                >Futárok kezelése</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="listcouriers"
+                routerLinkActive="active"
+                >Futárok listája</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <!-- Orders and Misc -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="listorders" routerLinkActive="active"
+            >Rendelések listája</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="makeorder" routerLinkActive="active"
+            >Rendelés készítése</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="listbydate" routerLinkActive="active"
+            >Keresés dátum szerint</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

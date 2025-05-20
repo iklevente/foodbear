@@ -1,0 +1,63 @@
+<div *ngIf="courier" class="container mt-4">
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Futár Részletek</h5>
+    </div>
+    <div class="card-body">
+      <dl class="row mb-0">
+        <dt class="col-sm-4">Azonosító:</dt>
+        <dd class="col-sm-8">{{ courier.id }}</dd>
+
+        <dt class="col-sm-4">Név:</dt>
+        <dd class="col-sm-8">{{ courier.name }}</dd>
+
+        <dt class="col-sm-4">Kapacitás:</dt>
+        <dd class="col-sm-8">{{ courier.capacity }}</dd>
+
+        <dt class="col-sm-4">Elérhetőség:</dt>
+        <dd class="col-sm-8">
+          <span
+            class="badge"
+            [ngClass]="courier.isAvailable ? 'bg-success' : 'bg-secondary'"
+          >
+            {{ courier.isAvailable ? "Elérhető" : "Nem elérhető" }}
+          </span>
+        </dd>
+
+        <dt class="col-sm-4">Rendelések száma:</dt>
+        <dd class="col-sm-8">{{ courier.orders.length }}</dd>
+
+        <dt class="col-sm-4">Kapcsolódó Éttermek:</dt>
+        <dd class="col-sm-8">
+          <ng-container
+            *ngFor="let restaurant of getRestaurants(); let last = last"
+          >
+            <a
+              class="badge bg-info text-dark me-1"
+              [routerLink]="'/mainpage/partner/' + restaurant.id"
+            >
+              {{ restaurant.name }}
+            </a>
+          </ng-container>
+        </dd>
+
+        <dt class="col-sm-4">Kapcsolódó Ételek:</dt>
+        <dd class="col-sm-8">
+          <ng-container *ngFor="let food of getFoods(); let last = last">
+            <a
+              class="badge bg-warning text-dark me-1"
+              [routerLink]="'/mainpage/food/' + food.id"
+            >
+              {{ food.name }}
+            </a>
+          </ng-container>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <h4>Futár Rendelések</h4>
+    <app-order-table [orders]="getOrders()"></app-order-table>
+  </div>
+</div>

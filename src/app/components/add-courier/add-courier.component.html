@@ -1,0 +1,159 @@
+<div class="row justify-content-center my-5">
+  <div class="col-md-4">
+    <div class="sticky-top">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Új Futár Létrehozása</h3>
+          <form [formGroup]="courierForm" (ngSubmit)="addCourier()">
+            <div class="mb-3">
+              <label class="form-label">Név</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="Írd be a nevet"
+                [ngClass]="{
+                  'is-invalid':
+                    courierForm.invalid &&
+                    courierForm.dirty &&
+                    courierForm.controls['name'].errors
+                }"
+              />
+              <div class="invalid-feedback">A név nem érvényes</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Kapacitás</label>
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                formControlName="capacity"
+                placeholder="Kapacitás"
+                [ngClass]="{
+                  'is-invalid':
+                    courierForm.invalid &&
+                    courierForm.dirty &&
+                    courierForm.controls['capacity'].errors
+                }"
+              />
+              <div class="invalid-feedback">A kapacitás nem érvényes</div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary w-100 mb-2"
+              [disabled]="courierForm.invalid"
+            >
+              Futár Létrehozása
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning w-100"
+              (click)="updateCourier()"
+              [disabled]="courierForm.invalid || !modifyEnabled"
+            >
+              Kijelölt Módosítása
+            </button>
+          </form>
+
+          <div
+            *ngIf="serversideError"
+            class="alert alert-danger mt-3"
+            role="alert"
+          >
+            A felhasználó regisztrálása sikertelen
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <h2 class="mb-4">Futárok</h2>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Név</th>
+            <th>Kapacitás</th>
+            <th>Elérhető</th>
+            <th>Rendelések</th>
+            <th>Műveletek</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let courier of couriers">
+            <td>{{ courier.id }}</td>
+            <td>{{ courier.name }}</td>
+            <td>{{ courier.capacity }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.bg-success]="courier.isAvailable"
+                [class.bg-secondary]="!courier.isAvailable"
+              >
+                {{ courier.isAvailable ? "Igen" : "Nem" }}
+              </span>
+            </td>
+            <td>{{ courier.orders.length }}</td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-danger" (click)="deleteCourier(courier)">
+                  Törlés
+                </button>
+                <button
+                  class="btn btn-warning"
+                  (click)="selectCourier(courier)"
+                >
+                  Kiválasztás
+                </button>
+                <a
+                  class="btn btn-primary"
+                  [routerLink]="'/mainpage/courier/' + courier.id"
+                >
+                  Részletek
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="alertModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="alertModalLabel">Hiba</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Bezárás"
+          ></button>
+        </div>
+        <div class="modal-body">
+          A felhasználó nem törölhető, mert létező rendelésekhez kapcsolódik.
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
