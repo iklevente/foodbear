@@ -40,7 +40,7 @@ export class AddFoodComponent implements OnInit {
       ],
       description: [''],
       imageUrl: [
-        'https://cdn-icons-png.flaticon.com/512/44/44289.png',
+        '',
         {
           validators: [
             Validators.pattern(

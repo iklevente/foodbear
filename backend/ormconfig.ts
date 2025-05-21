@@ -2,7 +2,7 @@ import { ConnectionOptions } from 'typeorm';
 
 const connectionOptions: ConnectionOptions = {
   type: 'mssql',
-  host: process.env.MSSQL_HOST || '192.168.100.4',
+  host: process.env.MSSQL_HOST || '127.0.0.1',
   port: Number(process.env.MSSQL_PORT) || 1433,
   username: process.env.MSSQL_USERNAME || 'sa',
   password: process.env.MSSQL_PASSWORD || 'yourStrong(!)Password',

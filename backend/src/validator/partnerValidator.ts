@@ -22,8 +22,8 @@ module.exports = [
   check('taxNumber')
     .isLength({ min: 11, max: 11 })
     .withMessage('Az adószám pontosan 11 számjegy legyen'),
-  check('adress').not().isEmpty().withMessage('A cím megadása kötelező'),
-  check('adress')
+  check('address').not().isEmpty().withMessage('A cím megadása kötelező'),
+  check('address')
     .isLength({ min: 5 })
     .withMessage('A cím legalább 5 karakter hosszú legyen'),
 ];
